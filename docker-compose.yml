@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Frontend - Aplicación React
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    # Para desarrollo, puedes descomentar estas líneas para montar volúmenes
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./public:/app/public
+    environment:
+      - NODE_ENV=production
+      # - REACT_APP_API_URL=http://api:5000/api # Descomentar cuando se implemente el backend
+
+  # Backend - Para cuando se implemente la integración con Db2
+  # api:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - db2
+  #   environment:
+  #     - PORT=5000
+  #     - DB2_HOSTNAME=db2
+  #     - DB2_PORT=50000
+  #     - DB2_DATABASE=leadership
+  #     - DB2_UID=db2inst1
+  #     - DB2_PWD=password
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+
+  # Db2 Database - Comentado hasta que se implemente la integración
+  # db2:
+  #   image: ibmcom/db2
+  #   privileged: true
+  #   ports:
+  #     - "50000:50000"
+  #   environment:
+  #     - LICENSE=accept
+  #     - DB2INST1_PASSWORD=password
+  #     - DBNAME=leadership
+  #   volumes:
+  #     - db2-data:/database
+  
+# Volumes para persistencia de datos
+# volumes:
+#   db2-data: 

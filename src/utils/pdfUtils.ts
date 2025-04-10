@@ -31,10 +31,19 @@ export const generatePDF = (
     if (chartRef.current) {
       try {
         const chartCanvas = chartRef.current.canvas;
-        const chartImage = chartCanvas.toDataURL('image/png', 1.0);
-        doc.addImage(chartImage, 'PNG', 20, 40, 170, 85);
+        
+        // Usar un tamaño más pequeño para la imagen y un formato más compatible
+        // Esto puede ayudar con problemas de memoria en contenedores
+        const chartImage = chartCanvas.toDataURL('image/jpeg', 0.95);
+        
+        doc.addImage(chartImage, 'JPEG', 20, 40, 170, 85);
       } catch (error) {
         console.error('Error adding chart to PDF:', error);
+        // No interrumpir la generación del PDF si falla la imagen
+        doc.setTextColor(255, 0, 0);
+        doc.setFontSize(12);
+        doc.text('Chart image could not be generated', 105, 80, { align: 'center' });
+        doc.setTextColor(0, 0, 0);
       }
     }
 
@@ -67,7 +76,7 @@ export const generatePDF = (
       doc.rect(20, yPosition + 3, 100, 5, 'F');
       
       // The width of the colored part of the bar should be proportional to the score percentage
-      const barWidth = score;
+      const barWidth = Math.min(score, 100); // Asegurar que no exceda el ancho máximo
       doc.setFillColor(54, 162, 235);
       if (barWidth > 0) {
         doc.rect(20, yPosition + 3, barWidth, 5, 'F');
@@ -83,7 +92,7 @@ export const generatePDF = (
           return { id: dimId, score };
         }
         return lowest;
-      }, { id: null as string | null, score: null as number | null });
+      }, { id: '' as string, score: null as number | null });
 
     if (lowestScoreDimension.id) {
       const dimension = dimensions.find(d => d.id === lowestScoreDimension.id);
@@ -140,9 +149,22 @@ export const generatePDF = (
     doc.text(footerText, 105, 285, { align: 'center', maxWidth: 170 });
 
     // Save the PDF
-    doc.save('leadership-assessment-results.pdf');
-    
-    console.log('PDF generated and saved successfully');
+    try {
+      doc.save('leadership-assessment-results.pdf');
+      console.log('PDF generated and saved successfully');
+    } catch (saveError) {
+      console.error('Error saving PDF:', saveError);
+      
+      // Intento alternativo: abrir el PDF en una nueva ventana en lugar de guardarlo directamente
+      try {
+        const pdfBlob = doc.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl, '_blank');
+      } catch (windowError) {
+        console.error('Error opening PDF in new window:', windowError);
+        alert('Could not generate PDF. Please check console for errors.');
+      }
+    }
   } catch (error) {
     console.error('Error generating PDF:', error);
     alert('There was an error generating the PDF. Please try again later.');
