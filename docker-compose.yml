@@ -15,28 +15,23 @@ services:
     #   - ./public:/app/public
     environment:
       - NODE_ENV=production
-      # - REACT_APP_API_URL=http://api:5000/api # Descomentar cuando se implemente el backend
+      - REACT_APP_API_URL=http://api:5000/api # URL del backend
+    depends_on:
+      - api
 
-  # Backend - Para cuando se implemente la integración con Db2
-  # api:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5000:5000"
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - db2
-  #   environment:
-  #     - PORT=5000
-  #     - DB2_HOSTNAME=db2
-  #     - DB2_PORT=50000
-  #     - DB2_DATABASE=leadership
-  #     - DB2_UID=db2inst1
-  #     - DB2_PWD=password
-  #   volumes:
-  #     - ./backend:/app
-  #     - /app/node_modules
+  # Backend - API para guardar las respuestas en CSV
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - PORT=5000
+      - CSV_PATH=/data/respuestas.csv
+    volumes:
+      - ./:/data # Montar la carpeta principal para poder escribir en respuestas.csv
 
   # Db2 Database - Comentado hasta que se implemente la integración
   # db2:
