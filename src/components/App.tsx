@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import QuestionnaireForm from './QuestionnaireForm';
 import ResultsRadarChart from './ResultsRadarChart';
 import Recommendations from './Recommendations';
+import DatabaseView from './DatabaseView';
 import { Question, Dimension, UserResults } from '../types';
 import { questions } from '../data/questions';
 import { dimensions } from '../data/dimensions';
+import { generatePDF } from '../utils/pdfUtils';
+import { saveAssessment } from '../services/databaseService';
+import { Chart } from 'chart.js';
 
 const App: React.FC = () => {
   const [results, setResults] = useState<UserResults | null>(null);
-  const [currentStep, setCurrentStep] = useState<'questionnaire' | 'results'>('questionnaire');
+  const [currentStep, setCurrentStep] = useState<'questionnaire' | 'results' | 'database'>('questionnaire');
+  const chartRef = useRef<Chart<"radar", number[], string> | null>(null);
 
   // Check if there are saved results in localStorage
   useEffect(() => {
@@ -24,7 +29,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleSubmitAnswers = (answers: Record<string, number>) => {
+  const handleSubmitAnswers = async (answers: Record<string, number>) => {
     // Calculate scores for each dimension
     const dimensionScores: Record<string, number> = {};
     
@@ -56,6 +61,14 @@ const App: React.FC = () => {
     
     // Save results to localStorage
     localStorage.setItem('leadershipResults', JSON.stringify(newResults));
+    
+    // Save results to the database
+    try {
+      await saveAssessment(newResults);
+    } catch (error) {
+      console.error('Error al guardar en la base de datos:', error);
+      // No mostramos error al usuario para no interrumpir la experiencia
+    }
   };
 
   const handleReset = () => {
@@ -72,6 +85,23 @@ const App: React.FC = () => {
     return scores.length > 0 
       ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length) 
       : 0;
+  };
+
+  const handleChartRef = (chart: Chart<"radar", number[], string> | null) => {
+    chartRef.current = chart;
+  };
+
+  const handleExportPDF = () => {
+    if (!results || !chartRef.current) return;
+    generatePDF(results, dimensions, chartRef);
+  };
+
+  const handleViewDatabase = () => {
+    setCurrentStep('database');
+  };
+
+  const handleBackFromDatabase = () => {
+    setCurrentStep('results');
   };
 
   return (
@@ -103,16 +133,20 @@ const App: React.FC = () => {
             dimensions={dimensions}
             onSubmit={handleSubmitAnswers} 
           />
+        ) : currentStep === 'database' ? (
+          <DatabaseView onBack={handleBackFromDatabase} />
         ) : (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-semibold text-gray-800">Integrated Leadership Assessment</h2>
-              <button
-                onClick={handleReset}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
-              >
-                New Assessment
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleReset}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                >
+                  New Assessment
+                </button>
+              </div>
             </div>
 
             {results && (
@@ -122,11 +156,34 @@ const App: React.FC = () => {
                     <span className="text-gray-500 text-sm">Average Score:</span>
                     <span className="text-4xl font-bold text-blue-600 ml-2">{calculateAverageScore()}%</span>
                   </div>
+                  
+                  {/* Botones de acción principales */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleViewDatabase}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                      </svg>
+                      Ver Base de Datos
+                    </button>
+                    <button
+                      onClick={handleExportPDF}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      Exportar PDF
+                    </button>
+                  </div>
                 </div>
                 
                 <ResultsRadarChart 
                   results={results} 
-                  dimensions={dimensions} 
+                  dimensions={dimensions}
+                  onChartReady={handleChartRef}
                 />
                 
                 <div className="bg-white rounded-lg shadow-sm p-6 mt-6 grid grid-cols-1 md:grid-cols-5 gap-4">

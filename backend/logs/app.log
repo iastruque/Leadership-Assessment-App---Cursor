@@ -1,0 +1,85 @@
+{"address":"172.18.0.3","code":"ECONNREFUSED","errno":-111,"level":"error","message":"Error al inicializar la base de datos: connect ECONNREFUSED 172.18.0.3:5432","port":5432,"stack":"Error: connect ECONNREFUSED 172.18.0.3:5432\n    at /app/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async initializeDatabase (/app/src/index.js:41:20)","syscall":"connect","timestamp":"2025-04-16T16:00:13.787Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:00:13.790Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:03:44.048Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:03:44.049Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:03:44.050Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:03:44.050Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:03:44.051Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:03:44.076Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:03:44.077Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:04:09.902Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:04:09.903Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:04:09.904Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:04:09.904Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:04:09.905Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:04:09.923Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:04:09.924Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:16:52.337Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:16:52.338Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:16:52.338Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:16:52.338Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:16:52.340Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:16:52.355Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:16:52.356Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:18:41.867Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:18:41.868Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:18:41.868Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:18:41.868Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:18:41.870Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:18:41.888Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:18:41.890Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:22:07.745Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:22:07.746Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:22:07.747Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:22:07.747Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:22:07.749Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:22:07.767Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:22:07.769Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:25:42.018Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:25:42.019Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:25:42.020Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:25:42.020Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:25:42.021Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:25:42.046Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:25:42.047Z"}
+{"code":"22P02","file":"numutils.c","length":142,"level":"error","line":"232","message":"Error al crear assessment: invalid input syntax for type integer: \"q1_1\"","name":"error","routine":"pg_strtoint32","severity":"ERROR","stack":"error: invalid input syntax for type integer: \"q1_1\"\n    at /app/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async /app/src/index.js:198:9","timestamp":"2025-04-16T16:26:17.561Z","where":"unnamed portal parameter $2 = '...'"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:30:16.945Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:30:16.946Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:30:16.946Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:30:16.946Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:30:16.947Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:30:17.018Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:30:17.021Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:30:19.063Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:30:19.064Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:30:19.065Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:30:19.065Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:30:19.067Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:30:19.084Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:30:19.085Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:30:47.748Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:30:47.750Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:30:47.750Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:30:47.750Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:30:47.752Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:30:47.769Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:30:47.770Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:30:49.800Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:30:49.801Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:30:49.801Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:30:49.801Z"}
+{"level":"info","message":"Intentando conectar a la base de datos (intentos restantes: 5)...","timestamp":"2025-04-16T16:30:49.803Z"}
+{"level":"info","message":"Base de datos inicializada correctamente","timestamp":"2025-04-16T16:30:49.820Z"}
+{"level":"info","message":"Servidor ejecutándose en http://localhost:5000","timestamp":"2025-04-16T16:30:49.821Z"}
+{"level":"info","message":"DB_TYPE: postgres","timestamp":"2025-04-16T16:33:01.425Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:33:01.425Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:33:01.425Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:33:01.425Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:33:01.425Z"}
+{"address":"127.0.0.1","code":"ECONNREFUSED","errno":-111,"level":"error","message":"Error al iniciar el servidor: connect ECONNREFUSED 127.0.0.1:5432","port":5432,"stack":"Error: connect ECONNREFUSED 127.0.0.1:5432\n    at /app/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initializeDatabase (/app/src/config/postgres.js:27:18)\n    at async /app/src/index.js:198:5","syscall":"connect","timestamp":"2025-04-16T16:33:01.434Z"}
+{"level":"info","message":"DB_TYPE: postgres","timestamp":"2025-04-16T16:51:24.265Z"}
+{"level":"info","message":"POSTGRES_HOST: postgres","timestamp":"2025-04-16T16:51:24.265Z"}
+{"level":"info","message":"POSTGRES_PORT: 5432","timestamp":"2025-04-16T16:51:24.265Z"}
+{"level":"info","message":"POSTGRES_DB: leadership","timestamp":"2025-04-16T16:51:24.265Z"}
+{"level":"info","message":"POSTGRES_USER: postgres","timestamp":"2025-04-16T16:51:24.266Z"}
+{"address":"127.0.0.1","code":"ECONNREFUSED","errno":-111,"level":"error","message":"Error al iniciar el servidor: connect ECONNREFUSED 127.0.0.1:5432","port":5432,"stack":"Error: connect ECONNREFUSED 127.0.0.1:5432\n    at /app/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initializeDatabase (/app/src/config/postgres.js:27:18)\n    at async /app/src/index.js:198:5","syscall":"connect","timestamp":"2025-04-16T16:51:24.274Z"}
