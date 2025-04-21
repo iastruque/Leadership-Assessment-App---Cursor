@@ -1,3 +1,5 @@
+^C
+^C
 const { Pool } = require('pg');
 const winston = require('winston');
 const path = require('path');
@@ -24,9 +26,6 @@ const pool = new Pool({
   database: process.env.POSTGRES_DB || 'leadership',
   password: process.env.POSTGRES_PASSWORD || 'postgres',
   port: parseInt(process.env.POSTGRES_PORT || '5432'),
-  ssl: process.env.POSTGRES_SSL === 'true' ? {
-    rejectUnauthorized: false  // Establece a false para aceptar el certificado autofirmado
-  } : undefined
 });
 
 /**

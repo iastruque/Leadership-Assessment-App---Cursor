@@ -33,12 +33,27 @@ export const getAssessments = async () => {
 // Obtener un assessment específico por ID
 export const getAssessmentById = async (id: number) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/assessment/${id}`);
-    if (!response.ok) {
-      throw new Error('Error al obtener el assessment');
+    // Usamos la ruta alternativa, que es más tolerante a errores en datos relacionados
+    const response = await fetch(`${API_BASE_URL}/assessment-alt/${id}`);
+    
+    if (response.status === 404) {
+      throw new Error('404: Assessment no encontrado');
     }
-    return await response.json();
-  } catch (error) {
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`${response.status}: ${errorData.error || 'Error al obtener el assessment'}`);
+    }
+    
+    const data = await response.json();
+    
+    // Validar la estructura de datos recibida
+    if (!data || typeof data !== 'object') {
+      throw new Error('Formato de datos inválido recibido del servidor');
+    }
+    
+    return data;
+  } catch (error: any) {
     console.error(`Error en getAssessmentById(${id}):`, error);
     throw error;
   }

@@ -23,7 +23,12 @@ interface DetailedAssessment {
   date: string;
   averageScore: number;
   dimensionScores: Record<string, number>;
-  answers: Record<string, number>;
+  answers: Record<string, any>;
+  metadata?: {
+    hasAnswers: boolean;
+    hasDimensionScores: boolean;
+    message: string | null;
+  };
 }
 
 const DatabaseView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
@@ -58,12 +63,23 @@ const DatabaseView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const handleViewDetails = async (id: number) => {
     try {
       setLoading(true);
-      const detailedAssessment = await getAssessmentById(id);
-      setSelectedAssessment(detailedAssessment);
       setError(null);
-    } catch (err) {
-      setError(`Error al cargar los detalles del assessment ${id}`);
-      console.error(err);
+      const detailedAssessment = await getAssessmentById(id);
+      
+      if (!detailedAssessment) {
+        throw new Error(`No se encontraron detalles para el assessment ${id}`);
+      }
+      
+      setSelectedAssessment(detailedAssessment);
+    } catch (err: any) {
+      console.error('Error en handleViewDetails:', err);
+      if (err.message && err.message.includes('404')) {
+        setError(`Assessment ${id} no se encuentra en la base de datos. Por favor, seleccione otro assessment.`);
+      } else if (err.message && err.message.includes('500')) {
+        setError(`Error del servidor al cargar los detalles del assessment ${id}. Por favor, inténtelo de nuevo más tarde.`);
+      } else {
+        setError(`Error al cargar los detalles del assessment ${id}: ${err.message || 'Error desconocido'}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -185,16 +201,28 @@ const DatabaseView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
               <div className="mt-6 bg-gray-50 p-4 rounded-lg">
                 <h4 className="font-medium mb-3">Respuestas a Preguntas</h4>
+                {selectedAssessment.metadata?.message && (
+                  <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded mb-4">
+                    {selectedAssessment.metadata.message}
+                  </div>
+                )}
                 {Object.entries(selectedAssessment.answers).length === 0 ? (
-                  <p className="text-gray-500 italic">No hay respuestas disponibles.</p>
+                  <p className="text-gray-500 italic">No hay respuestas disponibles. Este assessment se creó sin guardar las respuestas individuales.</p>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {Object.entries(selectedAssessment.answers).map(([questionId, answer]) => (
-                      <div key={questionId} className="border border-gray-200 p-3 rounded">
-                        <p className="text-sm text-gray-500">Pregunta #{questionId}</p>
-                        <p className="font-medium">{answer} / 5</p>
-                      </div>
-                    ))}
+                    {Object.entries(selectedAssessment.answers).map(([questionId, answer]) => {
+                      const answerValue = typeof answer === 'object' ? answer.value : answer;
+                      const dimension = typeof answer === 'object' ? answer.dimension : '';
+                      const questionText = typeof answer === 'object' ? answer.questionText : `Pregunta #${questionId}`;
+                      
+                      return (
+                        <div key={questionId} className="border border-gray-200 p-3 rounded">
+                          <p className="text-sm text-gray-500">{questionText}</p>
+                          {dimension && <p className="text-xs text-gray-400">Dimensión: {dimension}</p>}
+                          <p className="font-medium">{answerValue} / 5</p>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
